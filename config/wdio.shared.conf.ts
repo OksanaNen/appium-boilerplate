@@ -90,7 +90,12 @@ export const config: WebdriverIO.Config = {
     // - wdio.shared.local.appium.conf.ts
     // - wdio.shared.sauce.conf.ts
     // configuration files
-    services: [],
+    services: [
+        ['appium', {
+            command : 'appium'
+        }]
+    ],
+    path: "/",
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks
