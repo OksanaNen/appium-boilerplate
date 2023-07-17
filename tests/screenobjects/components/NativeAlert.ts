@@ -2,6 +2,8 @@ const SELECTORS = {
     ANDROID: {
         ALERT_TITLE: '*//android.widget.TextView[@resource-id="android:id/alertTitle"]',
         ALERT_MESSAGE: '*//android.widget.TextView[@resource-id="android:id/message"]',
+        ALERT_TEXT_LOGIN: '//android.widget.ScrollView[@content-desc="Login-screen"]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[4]/android.widget.TextView[2]',
+        ALERT_TEXT_SINGUP: '//android.widget.TextView[3][@class="android.widget.TextView"]',
         ALERT_BUTTON: '*//android.widget.Button[@text="{BUTTON_TEXT}"]',
     },
     IOS: {
@@ -58,6 +60,36 @@ class NativeAlert {
         }
 
         return `${await $(SELECTORS.ANDROID.ALERT_TITLE).getText()}\n${await $(SELECTORS.ANDROID.ALERT_MESSAGE).getText()}`;
+    }
+  
+    static async waitForTextLogin (isShown = true) {
+        const selector = driver.isAndroid
+            ? SELECTORS.ANDROID.ALERT_TEXT_LOGIN
+            : SELECTORS.IOS.ALERT;
+
+        return $(selector).waitForExist({
+            timeout: 11000,
+            reverse: !isShown,
+        });
+    }
+    
+    static async textLogin(): Promise<string> {
+        return `${await $(SELECTORS.ANDROID.ALERT_TEXT_LOGIN).getText()}`;
+    }
+
+    static async waitForTextSignUp (isShown = true) {
+        const selector = driver.isAndroid
+            ? SELECTORS.ANDROID.ALERT_TEXT_SINGUP
+            : SELECTORS.IOS.ALERT;
+
+        return $(selector).waitForExist({
+            timeout: 11000,
+            reverse: !isShown,
+        });
+    }   
+
+    static async textSignUp(): Promise<string> {
+        return `${await $(SELECTORS.ANDROID.ALERT_TEXT_SINGUP).getText()}`;
     }
 }
 
